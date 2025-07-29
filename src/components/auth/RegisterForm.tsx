@@ -12,7 +12,8 @@ import { useRouter } from 'next/navigation';
 
 const formSchema = z
   .object({
-    name: z.string().min(2, 'Name is required'),
+    firstName: z.string().min(2, 'Name is required'),
+    lastName: z.string().min(2, 'Last name is required'),
     email: z.string().email('Invalid email'),
     password: z.string().min(6, 'Password must be at least 6 characters'),
     confirmPassword: z.string(),
@@ -42,9 +43,11 @@ export default function RegisterForm() {
     setServerError('');
 
     try {
+      console.log('Submitting registration data:', data);
       const response = await registerUser(data);
+      console.log('Response from registration:', response);
 
-      if (!response.ok) {
+      if (!response.token) {
         const error = await response.json();
         setServerError(error.message || 'Something went wrong');
       } else {
@@ -64,10 +67,16 @@ export default function RegisterForm() {
       {serverError && <FormError message={serverError} />}
 
       <Input
-        label="Name"
+        label="First Name"
         type="text"
-        {...register('name')}
-        error={errors.name?.message}
+        {...register('firstName')}
+        error={errors.firstName?.message}
+      />
+      <Input
+        label="Last Name"
+        type="text"
+        {...register('lastName')}
+        error={errors.lastName?.message}
       />
 
       <Input
