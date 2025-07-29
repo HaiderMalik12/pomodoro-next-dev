@@ -3,5 +3,9 @@ export interface RegisterInput {
   lastName: string;
   email: string;
   password: string;
-  // Add other fields as needed
+}
+
+export interface LoginInput {
+  email: string;
+  password: string;
 }
