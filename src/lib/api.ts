@@ -20,3 +20,13 @@ export const loginUser = async (data: LoginInput) => {
 
   return res.json();
 };
+
+export const getProfile = async (data: {token : string}) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/profile`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${data.token}` },
+     credentials: 'include',
+  });
+
+  return res.json();
+};
