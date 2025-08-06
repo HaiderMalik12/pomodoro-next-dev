@@ -40,7 +40,7 @@ export default function LoginForm() {
       const response = await loginUser(data);
       console.log('Response from registration:', response);
 
-      if (!response.token) {
+      if (!response.message) {
         const error = await response.json();
         setServerError(error.message || 'Something went wrong');
       } else {
