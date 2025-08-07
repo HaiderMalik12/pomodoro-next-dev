@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
-
+import ClientWrapper from "@/components/ClientWrapper";
 import "./globals.css";
+import Navbar from "@/components/ui/Navbar";
 
 
 export default function RootLayout({
@@ -11,7 +11,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <ClientWrapper>
+          <Navbar />
+          {children}
+        </ClientWrapper>
       </body>
     </html>
   );

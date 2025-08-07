@@ -1,10 +1,10 @@
-import type { RegisterInput, LoginInput } from './types'; 
+import type { RegisterInput, LoginInput } from "./types";
 
 export const registerUser = async (data: RegisterInput) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(data),
   });
 
@@ -13,36 +13,45 @@ export const registerUser = async (data: RegisterInput) => {
 
 export const loginUser = async (data: LoginInput) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include', // <- this is required
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include", // <- this is required
     body: JSON.stringify(data),
   });
 
   return res.json();
 };
 
-export const getProfile = async (data: {token : string}) => {
+export const getProfile = async (data: { token: string }) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/profile`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${data.token}` },
-     credentials: 'include',
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
   });
 
   return res.json();
 };
 
+export const logout = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+
+  return res.json();
+};
 
 export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
   const res = await fetch(url, {
     ...options,
-    credentials: 'include', 
+    credentials: "include",
   });
 
-  console.log('Response status:', res);
+  console.log("Response status:", res);
 
   if (!res.ok) {
-    throw new Error('Request failed');
+    throw new Error("Request failed");
   }
 
   return res.json();

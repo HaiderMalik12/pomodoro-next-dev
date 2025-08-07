@@ -9,6 +9,7 @@ import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import FormError from '@/components/ui/FormError';
 import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/lib/store/authStore';
 
 const formSchema = z
   .object({
@@ -30,6 +31,7 @@ export default function LoginForm() {
   const [serverError, setServerError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { setLoggedIn } = useAuthStore(); 
 
   const onSubmit = async (data: FormSchema) => {
     setIsLoading(true);
@@ -44,6 +46,8 @@ export default function LoginForm() {
         const error = await response.json();
         setServerError(error.message || 'Something went wrong');
       } else {
+        setLoggedIn(true);
+        console.log('Login successful, redirecting to dashboard');
         router.push('/dashboard'); 
       }
     } catch (error) {
